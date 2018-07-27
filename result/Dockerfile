@@ -15,4 +15,7 @@ COPY . /app
 ENV PORT 8080
 EXPOSE 8080
 
+RUN addgroup -S appuser && adduser -S -G appuser appuser 
+USER appuser
+
 CMD ["node", "server.js"]
