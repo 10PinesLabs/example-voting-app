@@ -14,4 +14,7 @@ FROM openjdk:8-jre-alpine
 
 COPY --from=build /code/target/worker-jar-with-dependencies.jar /
 
+RUN addgroup -S appuser && adduser -S -G appuser appuser 
+USER appuser
+
 CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar", "/worker-jar-with-dependencies.jar"]
