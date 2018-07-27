@@ -17,12 +17,24 @@ class Worker {
   public static void main(String[] args) {
     try {
 
-      DB_HOST = System.getenv("DB_HOST");
-      DB_USER = System.getenv("DB_USER");
-      DB_PASS = System.getenv("DB_PASS");
-      DB_NAME = System.getenv("DB_NAME");
-      REDIS_HOST = System.getenv("REDIS_HOST");
-
+      if (System.getenv("DB_HOST") != null) {
+        DB_HOST = System.getenv("DB_HOST");
+      }
+      if (System.getenv("DB_USER") != null) {
+        DB_USER = System.getenv("DB_USER");
+      }
+      if (System.getenv("DB_PASS") !=  null) {
+        DB_PASS = System.getenv("DB_PASS");
+      }
+      
+      if (System.getenv("DB_NAME") !=null) {
+        DB_NAME = System.getenv("DB_NAME");
+      }
+      
+      if (System.getenv("REDIS_HOST") != null) {
+        REDIS_HOST = System.getenv("REDIS_HOST");
+      }
+      
       Jedis redis = connectToRedis(REDIS_HOST);
       Connection dbConn = connectToDB(DB_HOST);
 
