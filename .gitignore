@@ -2,3 +2,7 @@
 project.lock.json
 bin/
 obj/
+.classpath
+.project
+.settings/
+target/

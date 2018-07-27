@@ -6,10 +6,25 @@ import java.sql.*;
 import org.json.JSONObject;
 
 class Worker {
+
+
+  static String DB_HOST = "postgres";
+  static String DB_USER = "user3KK";
+  static String DB_PASS = "ldkrrekLx7xA7Rdi";
+  static String DB_NAME = "votingapp";
+  static String REDIS_HOST = "redis";
+
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis");
-      Connection dbConn = connectToDB("db");
+
+      DB_HOST = System.getenv("DB_HOST");
+      DB_USER = System.getenv("DB_USER");
+      DB_PASS = System.getenv("DB_PASS");
+      DB_NAME = System.getenv("DB_NAME");
+      REDIS_HOST = System.getenv("REDIS_HOST");
+
+      Jedis redis = connectToRedis(REDIS_HOST);
+      Connection dbConn = connectToDB(DB_HOST);
 
       System.err.println("Watching vote queue");
 
@@ -68,11 +83,11 @@ class Worker {
     try {
 
       Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://" + host + "/postgres";
+      String url = "jdbc:postgresql://" + host + "/" + DB_NAME;
 
       while (conn == null) {
         try {
-          conn = DriverManager.getConnection(url, "postgres", "");
+          conn = DriverManager.getConnection(url, DB_USER, DB_PASS);
         } catch (SQLException e) {
           System.err.println("Waiting for db");
           sleep(1000);
