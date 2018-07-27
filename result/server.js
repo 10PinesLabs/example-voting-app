@@ -13,6 +13,11 @@ io.set('transports', ['polling']);
 
 var port = process.env.PORT || 4000;
 
+var dbUser = process.env.DB_USER || "user3KK";
+var dbPass = process.env.DB_PASS || "ldkrrekLx7xA7Rdi";
+var dbName = process.env.DB_NAME || "votingapp";
+var dbHost = process.env.DB_HOST || "postgres";
+
 io.sockets.on('connection', function (socket) {
 
   socket.emit('message', { text : 'Welcome!' });
@@ -25,7 +30,7 @@ io.sockets.on('connection', function (socket) {
 async.retry(
   {times: 1000, interval: 1000},
   function(callback) {
-    pg.connect('postgres://postgres@db/postgres', function(err, client, done) {
+    pg.connect(`postgres://${dbUser}:${dbPass}@${dbHost}/${dbName}`, function(err, client, done) {
       if (err) {
         console.error("Waiting for db");
       }
